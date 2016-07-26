@@ -36,3 +36,7 @@
 	appId: somerandomkey
 	appSecret: somerandomkey
 	```
+
+5. Get Facebook Page ID - see the Facebook page URI
+
+6. Get Album List 

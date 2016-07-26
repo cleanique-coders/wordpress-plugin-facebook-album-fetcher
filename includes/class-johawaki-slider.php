@@ -26,6 +26,9 @@ class Johawaki_Slider {
 
 		//create sub menu 
 		add_submenu_page( 'johawaki-setting', 'Slider Setting', 'Slider Setting', 'administrator', 'johawaki-setting-slider', [ $this, 'setting_slider']);
+
+		//create sub menu 
+		add_submenu_page( 'johawaki-setting', 'Album', 'Album', 'administrator', 'johawaki-setting-album', [ $this, 'setting_album']);
 	}
 
 	public function enqueue_styles()
@@ -51,12 +54,14 @@ class Johawaki_Slider {
 
 	public function setting_slider()
 	{
-		// slider setting page
-		// facebook page johawaki
-		// get albums
-		// get album to display
 		require_once JOHAWAKI_SLIDER_DIR . '/controllers/admin/setting-slider.php';
 		require_once JOHAWAKI_SLIDER_DIR . '/partials/admin/setting-slider.php';
+	}
+
+	public function setting_album()
+	{
+		require_once JOHAWAKI_SLIDER_DIR . '/controllers/admin/setting-album.php';
+		require_once JOHAWAKI_SLIDER_DIR . '/partials/admin/setting-album.php';
 	}
 
 	public function view($atts) {

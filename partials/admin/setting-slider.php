@@ -38,7 +38,7 @@
 							  <div class="">
 							    <div class="input-group">
 							      <span class="input-group-addon">https://facebook.com/</span>
-							      <input id="facebookPage" name="facebookPage" class="form-control" placeholder="" type="text" required="">
+							      <input id="facebookPage" name="facebookPage" class="form-control" placeholder="" type="text" required="" value="<?= get_option('johawaki_slider_facebook_page') ?>">
 							    </div>
 							    
 							  </div>
