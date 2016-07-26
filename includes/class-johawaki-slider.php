@@ -12,10 +12,13 @@ class Johawaki_Slider {
 
 		// add plugin main menus
 		add_action('admin_menu', [ $this, 'setting_menus' ]);
+		
+		add_action( 'init', [ $this, 'define_shortcodes'] );
 	}
 
-	public function shortcodes()
+	public function define_shortcodes()
 	{
+		// shortcode
 		add_shortcode( 'johawaki-slider', [ __CLASS__ , 'view' ] );
 	}
 
@@ -64,30 +67,8 @@ class Johawaki_Slider {
 		require_once JOHAWAKI_SLIDER_DIR . '/partials/admin/setting-album.php';
 	}
 
-	public function view($atts) {
-
-		$a = shortcode_atts( array(
-			'slug' => '',
-			'width' => '100%',
-			'height' => ''
- 		), $atts );
-
-		if(!empty($a['slug'])) {
-			$args = array(
-				'name'           => $a['slug'],
-				'post_type'      => 'post',
-				'post_status'    => 'publish',
-				'posts_per_page' => 1
-			);
-
-			$post = get_posts($args);
-
-			preg_match_all("/src=\"([^\"]*)/", $post[0]->post_content, $images);
-
-			$images = $images[1];
-
-			require_once JOHAWAKI_SLIDER_DIR . '/partials/view.php';
-		}
-		// display nothing when no slug given
+	public function view() {
+		require_once JOHAWAKI_SLIDER_DIR . '/controllers/view.php';
+		require_once JOHAWAKI_SLIDER_DIR . '/partials/view.php';
 	}
 }

@@ -1,41 +1,55 @@
- <style>
-.swiper-container {
-    width: 100%;
-}
-.swiper-slide {
-    background-position: center;
-    background-size: contain;
-    background-repeat: no-repeat; 
-    min-height: 300px;
-    width: <?php echo $a['width']; ?>;
-    <?php echo !empty($a['height']) ? $a['height']:''; ?>;
-}
-</style>
 
-<div class="swiper-container">
-    <div class="swiper-wrapper">
-    	<?php foreach ($images as $key => $value): ?>
-    		<div class="swiper-slide" style="background-image:url(<?php echo $value; ?>)"></div>
-    	<?php endforeach ?>
-    </div>
-    <!-- Add Pagination -->
-    <div class="swiper-pagination"></div>
-</div>
+<script type="text/javascript">
+    var empty = <?= ($empty) ? 1 : 0; ?>;
+    var fb_api = JSON.parse('<?= json_encode($fb_api); ?>');
+    var access_token = null;
+    
+    if(fb_api && fb_api.facebook_page) {
+        jQuery.get('https://graph.facebook.com/oauth/access_token?client_id='+fb_api.application_id+'&client_secret='+fb_api.application_secret+'&grant_type=client_credentials', function(data) {
+            access_token = data;
+            jQuery.get('https://graph.facebook.com/v2.7/'+fb_api.facebook_page+'/albums?fields=id,name,description,link,cover_photo,count&'+access_token, function(albums) {
+                jQuery.each(albums.data, function(index, val) {
+                  
+                  var cover_photo = val.cover_photo;
+                  
+                  if(cover_photo) {
+                    if(fb_api.facebook_album.indexOf(val.id) > -1) {
+                        var src = "https://graph.facebook.com/v2.7/"+cover_photo.id+"/picture?"+access_token;
+                        var img = '<div class="well">';
+                        
+                        img += '<div class="media">';
+                        img += '<a target="_blank" class="pull-left" href="'+val.link+'">';
+                        img += '<img class="img-thumbnail" src="'+src+'">';
+                        img += '</a>';
+                        img += '<div class="media-body">';
+                        img += '<h4 class="media-heading"><a target="_blank" href="'+val.link+'">'+val.name+'</a>';
+                        img += '</h4>';
 
-<script>
-    var swiper = new Swiper('.swiper-container', {
-        pagination: '.swiper-pagination',
-        effect: 'coverflow',
-        grabCursor: true,
-        centeredSlides: true,
-        slidesPerView: 'auto',
-        autoplay: 3000,
-        coverflow: {
-            rotate: -50,
-            stretch: 0,
-            depth: 150,
-            modifier: 1,
-            slideShadows : false
-        }
-    });
+                        if(val.count > 1) {
+                            img += '<p class="text-right">'+val.count+' photo(s)</p>';
+                        }
+
+                        if(cover_photo.name) {
+                            img += '<p>'+cover_photo.name+'</p>';   
+                        }
+
+                        img += '</div>';
+                        img += '</div>';
+                        img += '</div>';
+
+                        if(src && val.count > 1) {
+                            jQuery('#albums').append(img);
+                        }
+                    }
+                      
+                        
+                  }
+                });
+            });
+        }); 
+    } else {
+        alert('Opss! you did not configure the plugin properly. Please update your configuration');
+    }
 </script>
+<div class="container" id="albums">
+</div>

@@ -3,7 +3,7 @@
 	var empty = <?= ($empty) ? 1 : 0; ?>;
 	var fb_api = JSON.parse('<?= json_encode($fb_api); ?>');
 	var access_token = null;
-	console.log(fb_api);
+	
 	if(fb_api && fb_api.facebook_page) {
 		jQuery.get('https://graph.facebook.com/oauth/access_token?client_id='+fb_api.application_id+'&client_secret='+fb_api.application_secret+'&grant_type=client_credentials', function(data) {
 			access_token = data;
@@ -52,7 +52,6 @@
 	} else {
 		alert('Opss! you did not configure the plugin properly. Please update your configuration');
 	}
-
 </script>
 <style>
     div > a > img {

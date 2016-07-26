@@ -39,4 +39,10 @@
 
 5. Get Facebook Page ID - see the Facebook page URI
 
-6. Get Album List 
+6. Get Album List and administrator should be able to select which album want to display to public
+
+7. Short Code provided in order to use the Facebook Albums in WordPress Post or Page
+
+	```
+	[johawaki-slider]
+	```
