@@ -14,7 +14,7 @@
 				  
 				  if(cover_photo) {
 					  var src = "https://graph.facebook.com/v2.7/"+cover_photo.id+"/picture?"+access_token;
-					  var img = '<div class="well">';
+					  var img = '<div class="well col-xs-12 col-sm-12 col-md-8 col-lg-8">';
 	  					img += '<div class="media">';
 	  					img += '<a target="_blank" class="pull-left" href="'+val.link+'">';
 	  					img += '<img class="img-thumbnail" src="'+src+'">';
@@ -63,8 +63,8 @@
 	<div class="bs-wrapper">
 		<h1>
 		<form class="form-horizontal" method="post">
-			<div class="container" id="albums">
-
+			<div class="container" >
+				<div id="albums"></div>
 			</div>
 			<button name="submit" class="btn pull-right btn-success">Save</button>
 		</form>
